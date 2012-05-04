@@ -88,7 +88,7 @@ function designer_optionspanel_array() {
 					'type' => 'text',
 					'option_name' => 'lefx_typekit',
 					'class' => 'le-threecol',
-					'desc' => 'Assign your Typekit fonts to the following selectors:<br /><strong>h1</strong> (title)<br /><strong>h2</strong> (subheading)<br /><strong>h2</strong> (subheading)<br /><strong>label</strong> (label)<br /><strong>p</strong> (body text)<br /><br />Typekit will override all Google Webfonts selections.',
+					'desc' => 'Assign your Typekit fonts to the <a href="#" class="modal-trigger" id="modal-typekit-info">following selectors</a>.<br /><br />Typekit will override all Google Webfonts selections.',
 					'subtype' => '',
 					'std' => '',
 					'premium' => ''
@@ -100,7 +100,19 @@ function designer_optionspanel_array() {
 					'type' => 'text',
 					'option_name' => 'lefx_monotype',
 					'class' => 'le-threecol',
-					'desc' => 'Assign your Monotype fonts to the following selectors:<br /><strong>h1</strong> (title)<br /><strong>h2</strong> (subheading)<br /><strong>label</strong> (label)<br /><strong>p</strong> (body text)<br /><br />You can find your ID by going into your project and clicking on the "Publish" tab, then selecting the long code after ".../jsapi/" and before the ".js" within the script embed textarea.<br /><br />Monotype will override all Google Webfonts selections.',
+					'desc' => 'Assign your Monotype fonts to the <a href="#" class="modal-trigger" id="modal-typekit-info">following selectors</a>.<br /><br />You can find your ID by going into your project and clicking on the "Publish" tab, then selecting the long code after ".../jsapi/" and before the ".js" within the script embed textarea.<br /><br />Monotype will override all Google Webfonts selections.',
+					'subtype' => '',
+					'std' => '',
+					'premium' => ''
+				)
+			),
+			array( // subsection
+				array(
+					'label' => 'Additional Scripts (Head)',
+					'type' => 'textarea',
+					'option_name' => 'lefx_addjshead',
+					'class' => 'le-threecol',
+					'desc' => 'Feel free to paste additional code here.  Use with caution.  The code will appear between your HEAD tags.  For code you\'d like to appear before the closing BODY tag, please see the additional code field in the Footer section of this page.  Please note, you must include your own SCRIPT tags here.',
 					'subtype' => '',
 					'std' => '',
 					'premium' => ''
@@ -226,7 +238,7 @@ function designer_optionspanel_array() {
 					'label' => 'Miscellaneous Link Text',
 					'type' => 'text',
 					'option_name' => 'description_linktext',
-					'desc' => 'Be sure to include the <strong>http://</strong>. ',
+					'desc' => '',
 					'subtype' => '',
 					'class' => '',
 					'std' => '',
@@ -255,6 +267,18 @@ function designer_optionspanel_array() {
 					'std' => ''
 				)
 			),
+			array( // subsection
+				array(
+					'label' => 'Additional Scripts (Closing Body)',
+					'type' => 'textarea',
+					'option_name' => 'lefx_addjsfooter',
+					'class' => 'le-threecol',
+					'desc' => 'Feel free to paste additional code here.  Use with caution.  The code will appear right before the closing BODY tag.  For code you\'d like to appear within your HEAD tag, please see the additional code field in the Head section of this page.  Please note, you must include your own SCRIPT tags here.',
+					'subtype' => '',
+					'std' => '',
+					'premium' => ''
+				)
+			),
 		),
 	);
 	
@@ -279,13 +303,40 @@ function build_le_designer_page() {
 	</div>
 	
 	<?php
-	
 		lefx_form(designer_optionspanel_name(), designer_optionspanel_array()); 
 	?>
+	
 </div>
 
-<div id="youtube-info" class="jqmWindow"><img src="<?php echo get_bloginfo('template_url'); ?>/functions/im/youtube-info.jpg" /></div>
-<div id="vimeo-info" class="jqmWindow"><img src="<?php echo get_bloginfo('template_url'); ?>/functions/im/vimeo-info.jpg" /></div>
+<div id="typekit-info" class="jqmWindow">
+	<h3>Embedded Font Selectors</h3>
+	<h4>Sign-Up Page</h4>
+	<ul>
+		<li><strong>Learn More Tab:</strong> a#learn-more</li>
+		<li><strong>Logo/Title:</strong> #signup-page header h1</li>
+		<li><strong>Subheading:</strong> #signup h2</li>
+		<li><strong>Field Labels:</strong> #signup label</li>
+		<li><strong>Body Text:</strong> #signup p</li>
+		<li><strong>Progress Container Heading:</strong> #progress-container h3</li>
+	</ul>
+	
+	<h4>Theme Pages</h4>
+	<ul>
+		<li><strong>Nav Link:</strong> nav a:link, nav a:visited</li>
+		<li><strong>Nav Link (Current Item):</strong> nav li.current_page_item ul li a, nav li.current_page_item a</li>
+		<li><strong>Sidebar Heading:</strong> h3.widget-title</li>
+		<li><strong>Sidebar Text:</strong> ul#widgets li ul li</li>
+		<li><strong>Sidebar Link:</strong> ul#widgets li ul li a:link, ul#widgets li ul li a:visited</li>
+		<li><strong>Tagcloud Link:</strong> .tagcloud a</li>
+		<li><strong>Post H1:</strong> .lepost h1</li>
+		<li><strong>Post H2:</strong> .lepost h2</li>
+		<li><strong>Post H3:</strong> .lepost h3</li>
+		<li><strong>Post H4:</strong> .lepost h4</li>
+		<li><strong>Post Body Text:</strong> .lepost p</li>
+		<li><strong>Post Unordered List:</strong> .lepost ul li</li>
+		<li><strong>Post Ordered List:</strong> .lepost ol li</li>
+	</ul>
+</div>
 
 <?php
 

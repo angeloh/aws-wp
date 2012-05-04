@@ -11,10 +11,10 @@
  * 
  */
 
-get_header(); 
-
 // STORE REFERRED BY CODE
 $_SESSION['referredBy'] = $referralindex;
+
+include('header.php'); // using this instead of get_header so we can pass $referralindex variable 
 
 // LOG VISITS AND CONVERSIONS
 logVisits($referralindex, $stats_table);

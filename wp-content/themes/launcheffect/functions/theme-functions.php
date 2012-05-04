@@ -9,7 +9,7 @@
  *
  */
  
-// GET RANDOM 
+// CREATE REFERRAL CODE
 
 function randomString() {
     $length = 5;
@@ -38,7 +38,7 @@ if (isset($_GET['ref'])) {
 }
 
 
-// QUERY DAT
+// WPDB QUERY
 
 function wpdbQuery($query, $type) {
 

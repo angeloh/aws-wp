@@ -1,0 +1,5 @@
+Launch Effect v2.18 Change Log
+
+[Fix] Ability to disable returning user tooltip
+[Fix] Ability to specify background image for theme container
+[Update] New presstrends.io tracking code

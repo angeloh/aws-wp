@@ -21,6 +21,8 @@
 <meta name="keywords" content="<?php le('bkt_metakey'); ?>"  /> 
 
 <meta property="og:title" content="<?php le('page_title'); ?>"/> 
+<meta property="og:url" content="<?php bloginfo('url'); ?>/?ref=<?php echo $referralindex; ?>"/> 
+<meta property="og:description" content="<?php le('bkt_metadesc'); ?>"/> 
 <?php if(leimg('bkt_thumb', 'bkt_thumbdisable', 'plugin_options')) { ?><meta property="og:image" content="<?php echo leimg('bkt_thumb', 'bkt_thumbdisable', 'plugin_options'); ?>"/><?php } ?>
 
 <?php if(leimg('bkt_favicon', 'bkt_favdisable', 'plugin_options')) { ?>
@@ -46,12 +48,11 @@ $lefx_webfonts = implode("', '", str_replace(' ','+',$lefx_webfonts_unique));
 
 <?php } ?>
 
-<link rel="stylesheet" type="text/css" href="<?php bloginfo('stylesheet_url'); ?>" />
-<link rel="stylesheet" href="<?php bloginfo('template_url'); ?>/style-options.php" media="screen">
+<?php include('style-options.php'); ?>
+
 <?php if(lefx_version() == 'premium') { ?>
-<link rel="stylesheet" type="text/css" href="<?php bloginfo('template_url'); ?>/premium/style-premium.css" />
-<link rel="stylesheet" type="text/css" href="<?php bloginfo('template_url'); ?>/js/fancybox/jquery.fancybox-1.3.4.css" />
-<link rel="stylesheet" href="<?php bloginfo('template_url'); ?>/premium/style-options-premium.php" media="screen">
+	<link rel="stylesheet" type="text/css" href="<?php bloginfo('template_url'); ?>/js/fancybox/jquery.fancybox-1.3.4.css" />
+	<?php include('premium/style-options-premium.php'); ?>
 <?php } ?>
 
 <script type="text/javascript" src="https://apis.google.com/js/plusone.js">
@@ -63,6 +64,10 @@ $lefx_webfonts = implode("', '", str_replace(' ','+',$lefx_webfonts_unique));
 	<?php echo ler('bkt_google'); ?>
 </script>
 <?php } ?>
+
+<!-- Start Additional User-Defined Code -->
+<?php echo ler('lefx_addjshead'); ?>
+<!-- End Additional User-Defined Code -->
 
 <!--[if lt IE 9]>
 <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
@@ -90,3 +95,11 @@ $lefx_webfonts = implode("', '", str_replace(' ','+',$lefx_webfonts_unique));
 </head>
 
 <body>
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_US/all.js#xfbml=1&appId=139611862792931";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>

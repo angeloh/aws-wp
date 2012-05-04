@@ -6,10 +6,12 @@
  * @subpackage Launch_Effect
  *
  */
+
 global $wpdb;
 
-// Create Stats Table
+// STATS TABLE
 $stats_table = $wpdb->prefix . "launcheffect";
+
 
 // VERSION TYPE
 function lefx_version() {
@@ -20,61 +22,71 @@ function lefx_version() {
 
 // TABLE CREATION AND UPDATES ON THEME ACTIVATION
 function theme_activation(){
-	
+		
 		global $wpdb;
 		global $wordpressapi_db_version;
+
 		$wordpressapi_db_version = "1.0";
-		// Create Stats Table
+		$launcheffect_db_version = "1.0";
+		
+		// Create stats table
 		$stats_table = $wpdb->prefix . "launcheffect";
-	
-	    if(lefx_version() == 'premium')
+		
+		// Check for current version
+		if(get_option('launcheffect_db_version') != $launcheffect_db_version || get_option('lefx_version') != lefx_version())
 		{
-			$sql2 = "CREATE TABLE " . $stats_table . " (
-				id mediumint(9) NOT NULL AUTO_INCREMENT,
-				time VARCHAR(19) DEFAULT '0' NOT NULL,
-				email VARCHAR(55),
-				code VARCHAR(6),
-				referred_by VARCHAR(6),
-				visits int(10),
-				conversions int(10),
-				ip VARCHAR(20),
-				UNIQUE KEY id (id),
-				custom_field1 VARCHAR(2000),
-				custom_field2 VARCHAR(2000),
-				custom_field3 VARCHAR(2000),
-				custom_field4 VARCHAR(2000),
-				custom_field5 VARCHAR(2000),
-				custom_field6 VARCHAR(2000),
-				custom_field7 VARCHAR(2000),
-				custom_field8 VARCHAR(2000),
-				custom_field9 VARCHAR(2000),
-				custom_field10 VARCHAR(2000)
-				
-			);";
+		    if(lefx_version() == 'premium')
+			{
+				$sql2 = "CREATE TABLE " . $stats_table . " (
+					id mediumint(9) NOT NULL AUTO_INCREMENT,
+					time VARCHAR(19) DEFAULT '0' NOT NULL,
+					email VARCHAR(55),
+					code VARCHAR(6),
+					referred_by VARCHAR(6),
+					visits int(10),
+					conversions int(10),
+					ip VARCHAR(20),
+					UNIQUE KEY id (id),
+					custom_field1 VARCHAR(2000),
+					custom_field2 VARCHAR(2000),
+					custom_field3 VARCHAR(2000),
+					custom_field4 VARCHAR(2000),
+					custom_field5 VARCHAR(2000),
+					custom_field6 VARCHAR(2000),
+					custom_field7 VARCHAR(2000),
+					custom_field8 VARCHAR(2000),
+					custom_field9 VARCHAR(2000),
+					custom_field10 VARCHAR(2000)
+					
+				);";
+			}
+			else
+			{
+				$sql2 = "CREATE TABLE " . $stats_table . " (
+					id mediumint(9) NOT NULL AUTO_INCREMENT,
+					time VARCHAR(19) DEFAULT '0' NOT NULL,
+					email VARCHAR(55),
+					code VARCHAR(6),
+					referred_by VARCHAR(6),
+					visits int(10),
+					conversions int(10),
+					ip VARCHAR(20),
+					UNIQUE KEY id (id)		
+				);";
+			}
+			require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
+			dbDelta($sql2);
+			add_option("wordpressapi_db_version", $wordpressapi_db_version);
+			add_option("launcheffect_db_version", $launcheffect_db_version);
+			add_option('lefx_version', lefx_version());
 		}
-		else
-		{
-			$sql2 = "CREATE TABLE " . $stats_table . " (
-				id mediumint(9) NOT NULL AUTO_INCREMENT,
-				time VARCHAR(19) DEFAULT '0' NOT NULL,
-				email VARCHAR(55),
-				code VARCHAR(6),
-				referred_by VARCHAR(6),
-				visits int(10),
-				conversions int(10),
-				ip VARCHAR(20),
-				UNIQUE KEY id (id)		
-			);";
-		}
-		require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
-		dbDelta($sql2);
-		add_option("wordpressapi_db_version", $wordpressapi_db_version);
 }
 add_action('after_setup_theme','theme_activation');
 
+
 // AUTOMATICALLY CREATE SIGNUP PAGE AND BLOG PAGE ON INSTALL
+
 if (isset($_GET['activated']) && is_admin() && current_user_can('edit_posts')){
-	
 	
 	// CREATE SIGN UP PAGE
 	
@@ -93,8 +105,7 @@ if (isset($_GET['activated']) && is_admin() && current_user_can('edit_posts')){
 	
 	if(lefx_version() == 'premium'){
 		
-		
-		// CREATE BLOG PAGE
+		// CREATE BLOG PAGE (Premium Only)
 		
 		$blogpage_check = get_page_by_title('Blog');
 		$blogpage_create = array(
@@ -109,12 +120,12 @@ if (isset($_GET['activated']) && is_admin() && current_user_can('edit_posts')){
 		}
 		
 		
-		// CREATE LAUNCH EFFECT PREMIUM INSTRUCTIONS POST
+		// CREATE LAUNCH EFFECT PREMIUM INSTRUCTIONS POST  (Premium Only)
 		
-		$documentationpage_check = get_page_by_title('Setup Instructions for v2.1', 'object', 'post');
+		$documentationpage_check = get_page_by_title('Setup Instructions for v2.17', 'object', 'post');
 		$documentationpage_content = <<<EOT
 	
-Welcome to Launch Effect Premium v2.1!  Launch Effect Premium lets you create and customize an entire website at the click of a few buttons.  Version 2.1 comes to you with custom fields, important bug fixes, and some nifty styling updates.  Take a look around to see what's new and launch something today!
+Welcome to Launch Effect Premium v2.17!  Launch Effect Premium lets you create and customize an entire website at the click of a few buttons.  We've done some housecleaning in version 2.17 with a focus on making the theme more stable and fast.  Take a look around to see what's new and launch something today!
 
 Setting up is easy, but there's definitely a few steps that have to be done in order for things to work properly.  Please follow the steps below and you'll be up and running in no time.
 
@@ -142,7 +153,7 @@ Now when you create an image gallery, the thumbnails will be formatted according
 
 <h4>Step 4 &mdash; Create Nav Menu</h4>
 Go to <strong>Appearance > Menus</strong>. 
-This is where your navigation menu is set up and controlled.  At the top left, under "Theme Locations", use the drop down menu to select "Launch Effect" and press save.  Now you can use the options at left to choose what pages and posts you'd like to appear in your nav menu.
+This is where your navigation menu is set up and controlled.  In the large panel on the right, next to "Menu Name," write a name for your menu (it can be anything) and press save.  The page will refresh and you will see a new panel called "Theme Locations at the top left.  Use the drop down menu to select "Launch Effect" and press save.  Now you can use the options at left to choose what pages and posts you'd like to appear in your nav menu.
 
 <h4>Step 5 &mdash; Select Widgets</h4>
 Go to <strong>Appearance > Widgets</strong>.
@@ -156,7 +167,7 @@ EOT;
 
 		$documentationpage_create = array(
 			'post_type' => 'post',
-			'post_title' => 'Setup Instructions for v2.1',
+			'post_title' => 'Setup Instructions for v2.17',
 			'post_content' => $documentationpage_content,
 			'post_status' => 'publish',
 			'post_author' => 1,
@@ -170,11 +181,11 @@ EOT;
 		
 		// CREATE LAUNCH EFFECT LITE INSTRUCTIONS POST
 		
-		$documentationpage_check = get_page_by_title('Setup Instructions for v2.1 Lite', 'object', 'post');
+		$documentationpage_check = get_page_by_title('Setup Instructions for v2.17 Lite', 'object', 'post');
 		$documentationpage_content = <<<EOT
 
 	
-Welcome to Launch Effect v2.1 Lite!  Launch Effect Lite lets you create and customize a viral landing page at the click of a few buttons.  Version 2.1 comes to you with some nifty styling updates and important bug fixes.  Take a look around to see what's new and launch something today!
+Welcome to Launch Effect v2.17 Lite!  Launch Effect Lite lets you create and customize a viral landing page at the click of a few buttons.  We've done some housecleaning in version 2.17 with a focus on making the theme more stable and fast.  Take a look around to see what's new and launch something today!
 
 If you're after a full-featured theme that still has the ease of customization and viral linking powers that you've come to love about Launch Effect Lite be sure to check out <a href="http://launcheffectapp.com/premium">Launch Effect Premium</a>!
 
@@ -195,7 +206,7 @@ EOT;
 
 		$documentationpage_create = array(
 			'post_type' => 'post',
-			'post_title' => 'Setup Instructions for v2.1 Lite',
+			'post_title' => 'Setup Instructions for v2.17 Lite',
 			'post_content' => $documentationpage_content,
 			'post_status' => 'publish',
 			'post_author' => 1,
@@ -299,7 +310,7 @@ function lefx_scripts() {
 	wp_register_script('lefx_script_jpicker', get_template_directory_uri() . '/js/jpicker/jpicker-1.1.6.js', array('jquery'), '1.0' );
 	wp_enqueue_script('lefx_script_jpicker');
 	
-	wp_register_script('lefx_script_cookie', get_template_directory_uri() . '/js/jquery.cookie.js', array('jquery'), '1.0' );
+	wp_register_script('lefx_script_cookie', get_template_directory_uri() . '/js/jquerycookie.js', array('jquery'), '1.0' );
 	wp_enqueue_script('lefx_script_cookie');
 	
 	wp_register_script('lefx_script_jqueryui', get_template_directory_uri() . '/js/jqueryui/js/jquery-ui-1.8.16.custom.min.js', array('jquery'), '1.0' );
@@ -326,7 +337,7 @@ require_once(TEMPLATEPATH . '/inc/MCAPI.class.php');
 // INCLUDE AWeber
 require_once(TEMPLATEPATH . '/inc/aweber/api/aweber_api.php');
 
-// INCLUDE Campaign Monigor
+// INCLUDE Campaign Monitor
 require_once(TEMPLATEPATH . '/inc/campaignmonitor/csrest_general.php');
 require_once(TEMPLATEPATH . '/inc/campaignmonitor/csrest_lists.php');
 require_once(TEMPLATEPATH . '/inc/campaignmonitor/csrest_clients.php');
@@ -505,8 +516,6 @@ function my_gallery_shortcode_function($attr) {
 
 
 // BUILD THEME SUBMENU TABS
-
-
 function lefx_tabs($currtab) { ?>
 
 	<div class="le-icons icon32"><br /></div>
@@ -529,6 +538,61 @@ function lefx_subtabs($currtab) { ?>
 </ul>
 
 <?php }
+
+
+// PRESSTRENDS
+// Start of Presstrends Magic
+function presstrends() {
+
+	// PressTrends Account API Key
+	$api_key = 'yhjvkq3zndp2m45vzsspypzgx0lmbcfcpazs';
+	
+	// Start of Metrics
+	global $wpdb;
+	$data = get_transient( 'presstrends_data' );
+	if (!$data || $data == ''){
+	$api_base = 'http://api.presstrends.io/index.php/api/sites/update/api/';
+	$url = $api_base . $api_key . '/';
+	$data = array();
+	$count_posts = wp_count_posts();
+	$count_pages = wp_count_posts('page');
+	$comments_count = wp_count_comments();
+	$theme_data = get_theme_data(get_stylesheet_directory() . '/style.css');
+	$plugin_count = count(get_option('active_plugins'));
+	$all_plugins = get_plugins();
+	foreach($all_plugins as $plugin_file => $plugin_data) {
+	$plugin_name .= $plugin_data['Name'];
+	$plugin_name .= '&';}
+	$posts_with_comments = $wpdb->get_var("SELECT COUNT(*) FROM {$wpdb->prefix}posts WHERE post_type='post' AND comment_count > 0");
+	$comments_to_posts = number_format(($posts_with_comments / $count_posts->publish) * 100, 0, '.', '');
+	$pingback_result = $wpdb->get_var('SELECT COUNT(comment_ID) FROM '.$wpdb->comments.' WHERE comment_type = "pingback"');
+	$data['url'] = stripslashes(str_replace(array('http://', '/', ':' ), '', site_url()));
+	$data['posts'] = $count_posts->publish;
+	$data['pages'] = $count_pages->publish;
+	$data['comments'] = $comments_count->total_comments;
+	$data['approved'] = $comments_count->approved;
+	$data['spam'] = $comments_count->spam;
+	$data['pingbacks'] = $pingback_result;
+	$data['post_conversion'] = $comments_to_posts;
+	$data['theme_version'] = $theme_data['Version'];
+	$data['theme_name'] = $theme_data['Name'];
+	$data['site_name'] = str_replace( ' ', '', get_bloginfo( 'name' ));
+	$data['plugins'] = $plugin_count;
+	$data['plugin'] = urlencode($plugin_name);
+	$data['wpversion'] = get_bloginfo('version');
+	foreach ( $data as $k => $v ) {
+	$url .= $k . '/' . $v . '/';}
+	$response = wp_remote_get( $url );
+	set_transient('presstrends_data', $data, 60*60*24);}
+
+}
+
+if(ler('lefx_disablepresstrends') != 'true') {
+	add_action('admin_init', 'presstrends');
+}
+
+
+// INCLUDING PORTIONS OF WP TWENTYTEN THEME
 
 /**
  * TwentyTen functions and definitions
@@ -877,50 +941,3 @@ function twentyten_posted_in() {
 	);
 }
 endif;
-
-
-// PRESSTRENDS
-function presstrends() {
-
-// Add your PressTrends and Theme API Keys
-$api_key = 'yhjvkq3zndp2m45vzsspypzgx0lmbcfcpazs';
-$auth = 'vwr6xc947lv8kv3s5mv9m4p3kjbmz7g27';
-
-// NO NEED TO EDIT BELOW
-$data = get_transient( 'presstrends_data' );
-if (!$data || $data == ''){
-$api_base = 'http://api.presstrends.io/index.php/api/sites/add/auth/';
-$url = $api_base . $auth . '/api/' . $api_key . '/';
-$data = array();
-$count_posts = wp_count_posts();
-$count_pages = wp_count_posts('page');
-$comments_count = wp_count_comments();
-$theme_data = get_theme_data(get_stylesheet_directory() . '/style.css');
-$plugin_count = count(get_option('active_plugins'));
-$all_plugins = get_plugins();
-foreach($all_plugins as $plugin_file => $plugin_data) {
-$plugin_name .= $plugin_data['Name'];
-$plugin_name .= '&';
-}
-$data['url'] = stripslashes(str_replace(array('http://', '/', ':' ), '', site_url()));
-$data['posts'] = $count_posts->publish;
-$data['pages'] = $count_pages->publish;
-$data['comments'] = $comments_count->total_comments;
-$data['approved'] = $comments_count->approved;
-$data['spam'] = $comments_count->spam;
-$data['theme_version'] = $theme_data['Version'];
-$data['theme_name'] = $theme_data['Name'];
-$data['site_name'] = str_replace( ' ', '', get_bloginfo( 'name' ));
-$data['plugins'] = $plugin_count;
-$data['plugin'] = urlencode($plugin_name);
-$data['wpversion'] = get_bloginfo('version');
-foreach ( $data as $k => $v ) {
-$url .= $k . '/' . $v . '/';
-}
-$response = wp_remote_get( $url );
-set_transient('presstrends_data', $data, 60*60*24);
-}}
-
-if(ler('lefx_disablepresstrends') != 'true') {
-	add_action('admin_init', 'presstrends');
-}

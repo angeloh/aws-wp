@@ -1124,10 +1124,10 @@ function launchmodule_optionspanel_array() {
 				),
 				array(
 					'label' => 'Preface',
-					'type' => 'text',
+					'type' => 'textarea',
 					'class' => 'le-threecol',
 					'option_name' => 'lefx_privacy_policy_label',
-					'desc' => 'If privacy policy is enabled, this is the text that will appear directly below the email sign-up field.  The text for the link to the privacy policy itself is determined by what is filled out below for the Privacy Policy Name.<br /><br /><strong>Suggestion: </strong>By submitting my email, I understand the',
+					'desc' => 'If privacy policy is enabled, this is the text that will appear directly below the email sign-up field.  The text for the link to the privacy policy itself is determined by what is filled out below for the Privacy Policy Name.<br /><br />If you are using a privacy policy generator such as iubenda (<a href="http://www.iubenda.com/" target="_blank">iubenda.com</a>), you should embed that code here (and leave the Title and Popup Window Content fields empty).<br /><br /><strong>Suggestion: </strong>By submitting my email, I understand the',
 					'subtype' => '',
 					'premium' => '',
 					'std' => 'By submitting my email, I understand the'
@@ -1137,10 +1137,10 @@ function launchmodule_optionspanel_array() {
 					'type' => 'text',
 					'class' => 'le-threecol',
 					'option_name' => 'lefx_privacy_policy_heading',
-					'desc' => '<strong>Suggestion: </strong>privacy policy',
+					'desc' => '<strong>Suggestion: </strong>privacy policy.',
 					'subtype' => '',
 					'premium' => '',
-					'std' => 'privacy policy'
+					'std' => 'privacy policy.'
 				),	
 				array(
 					'label' => 'Popup Window Content',
@@ -1154,8 +1154,40 @@ function launchmodule_optionspanel_array() {
 				),		
 			),
 		),		
-	'Returning Visitor Messages' => 	
+	'Returning Visitors' => 	
 		array(
+			array( // subsection
+				array(
+					'label' => 'Show Returning User Tooltip',
+					'type' => 'check',
+					'option_name' => 'lefx_reuser_enable',
+					'class' => 'le-check',
+					'subtype' => '',
+					'desc' => '',
+					'premium' => '',
+					'std' => 'true'
+				),
+				array(
+					'label' => 'Returning User Tooltip Label',
+					'type' => 'text',
+					'option_name' => 'lefx_reuser_label',
+					'desc' => '<strong>Suggested Text:</strong> Returning user?',
+					'subtype' => '',
+					'class' => '',
+					'premium' => '',
+					'std' => 'Returning user?'
+				),
+				array(
+					'label' => 'Returning User Tooltip Content',
+					'type' => 'text',
+					'option_name' => 'lefx_reuser_bubble',
+					'desc' => '<strong>Suggested Text:</strong> Simply enter your email address and submit the form to view your stats.',
+					'subtype' => '',
+					'class' => '',
+					'premium' => '',
+					'std' => 'Simply enter your email address and submit the form to view your stats.'
+				),
+			),
 			array( // subsection
 				array(
 					'label' => 'Greeting Subheading',

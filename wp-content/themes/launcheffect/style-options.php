@@ -1,4 +1,4 @@
-<?php header("Content-type: text/css");
+<?php
 /**
  * Theme Options CSS
  *
@@ -9,20 +9,100 @@
  * 
  */
 
-// INCLUDE WORDPRESS STUFF
-include_once('../../../wp-load.php');
-include_once('../../../wp-includes/wp-db.php');
-include_once('functions/designer-functions.php');
-
 // EFFECTS			
 $textShadow = '0px 2px 1px #333';
 $letterPress = '0px 1px 1px #' . lighter('container_background_color');
 $dropShadow = '-webkit-box-shadow: 0px 0px 10px #111; -moz-box-shadow: 0px 0px 10px #111; box-shadow: 0px 0px 10px #111;';
 $glow = '-webkit-box-shadow: 0px 0px 10px #FFF;	-moz-box-shadow: 0px 0px 10px #FFF; box-shadow: 0px 0px 10px #FFF;';
 $noShadow = '-webkit-box-shadow: 0px 0px 0px #FFF; -moz-box-shadow: 0px 0px 0px #FFF; box-shadow: 0px 0px 0px #FFF;';
-$barInset = 'inset 0px 1px 0px 0px #' . lighter('lefx_progbarcolor') . ', inset 0px -5px 8px 0px #' . darker2('lefx_progbarcolor');
-
 ?>
+
+<style type="text/css">
+
+/* RESET CSS BY ERIC MEYER
+   http://meyerweb.com/eric/tools/css/reset/ 
+   v2.0 | 20110126
+   License: none (public domain)
+*/
+
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed, 
+figure, figcaption, footer, header, hgroup, 
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font-size: 100%;
+	font: inherit;
+	vertical-align: baseline;
+}
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure, 
+footer, header, hgroup, menu, nav, section {
+	display: block;
+}
+body {
+	line-height: 1;
+}
+ol, ul {
+	list-style: none;
+}
+blockquote, q {
+	quotes: none;
+}
+blockquote:before, blockquote:after,
+q:before, q:after {
+	content: '';
+	content: none;
+}
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
+}
+
+
+/* BASIC STYLING */
+
+* {margin:0;padding:0}
+
+body { 
+	font-family: Arial, Helvetica, sans-serif;
+	font-size:62.5%;
+	text-align:left;
+	background-color:#333;
+}
+
+strong {
+	font-weight:bold;
+}
+
+em {
+	font-style:italic;
+}
+
+.clear {
+	clear:both;
+}
+
+h1, h2, h3, p, label {
+	visibility:hidden;
+}
+
+input[type=text],
+textarea,
+input#submit-button {
+	-webkit-appearance: none !important;
+}
+
 
 /* CONTAINER */
 
@@ -136,28 +216,25 @@ $barInset = 'inset 0px 1px 0px 0px #' . lighter('lefx_progbarcolor') . ', inset 
 	text-shadow: <?php if(get_option('heading_effects') == 'letterpress') { echo $letterPress; } elseif(get_option('heading_effects') == 'shadow') {echo $textShadow;} else {echo 'none'; } ?>;
 	text-align: <?php echo ler('heading_alignment'); ?>;
 	font-size:<?php echo ler('heading_size') . 'em'; ?>;
-	margin:0 0 50px 0;
+	margin:0 0 32px 0;
 }
 
-<?php 
-	// 	if logo image, get dimensions
-	if(leimg('bkt_logo', 'bkt_logodisable', 'launchmodule_options')) { 
-		list($width, $height, $type, $attr) = getimagesize(leimg('bkt_logo', 'bkt_logodisable', 'launchmodule_options')); 
-	} 
-?>
-
 #signup-page header h1.hastextheading.haslogo {
-	padding-top:<?php echo $height . 'px'; ?>;
+	/* js sets the padding-top here based on image height */
 }
 
 #signup-page header h1.notextheading.haslogo {
-	height:<?php echo $height . 'px'; ?>;
+	/* js sets the height here based on image height */
 	text-indent:-9999px;
 }
 
 #signup-page header h1.notextheading.nologo {
 	display:none;
 	margin:0;
+}
+
+#signup-page header img#logoHeight {
+	display:none;
 }
 
 #signup-page header h1.haslogo span {
@@ -171,7 +248,7 @@ $barInset = 'inset 0px 1px 0px 0px #' . lighter('lefx_progbarcolor') . ', inset 
 
 #signup-page .feature,
 #signup-page .feature iframe {
-	margin:0 0 20px 0;
+	margin:0 0 15px 0;
 }
 
 
@@ -208,10 +285,10 @@ $barInset = 'inset 0px 1px 0px 0px #' . lighter('lefx_progbarcolor') . ', inset 
 
 #signup p {
 	font-size:<?php echo ler('description_size') . 'em'; ?> !important;
-	font-family:<?php legogl('description_font_goog', 'description_font'); ?> !important;
+	font-family:<?php legogl('description_font_goog', 'description_font'); ?>;
 	font-weight:<?php echo ler('description_weight'); ?>;
 	color:<?php echo '#'; le('description_color'); ?>;
-	margin:0 0 30px 0;
+	margin:0 0 18px 0;
 	line-height:1.4em;
 }
 
@@ -415,7 +492,13 @@ input#returningcode {
 
 /* LAUNCH - AJAX MESSAGES */
 
-#success, #returning, #success-content {display:none;}
+#success, 
+#success-content,
+#newuser,
+#returninguser,
+#returninguserurl {
+	display:none;
+}
 
 #pass_thru_error {
 	color:#DA342E;
@@ -453,23 +536,23 @@ span.clicks, span.conversions {
 	padding:5px 0 13px 18px;
 	margin:10px 0 30px 0;
 	position:relative;
-	background:url('im/social-bg.png') repeat;
+	background:url('<?php bloginfo('template_url'); ?>/im/social-bg.png') repeat;
 	-webkit-border-radius: 3px;
 	-moz-border-radius: 3px;
 	border-radius: 3px;
 }
 
-#fblikeblock, #fblikeblock-return, 
-#tweetblock, #tweetblock-return, 
-#plusoneblock, #plusoneblock-return, 
-#tumblrblock, #tumblrblock-return,
-#linkinblock, #linkinblock-return {
+#fblikeblock,
+#tweetblock,
+#plusoneblock,
+#tumblrblock,
+#linkinblock {
 	float:left !important;
 	margin:10px 18px 0 0 !important;
 	height:23px !important;
 }
 
-#fblikeblock, #fblikeblock-return {
+#fblikeblock {
 	width:108px !important;
 }
 
@@ -526,7 +609,7 @@ a#reusertip:hover {
 /* INNER FOOTER */
 
 ul#inner-footer {
-	margin:30px 0 0 0;
+	margin:22px 0 0 0;
 	overflow:hidden;
 }
 
@@ -576,23 +659,23 @@ ul#inner-footer li.inner-footer_icon.facebooklike {
 }
 
 ul#inner-footer li.inner-footer_icon.facebook a {
- 	background:url('im/facebook.png') no-repeat top left;
+ 	background:url('<?php bloginfo('template_url'); ?>/im/facebook.png') no-repeat top left;
 }
 
 ul#inner-footer li.inner-footer_icon.twitter a {
- 	background:url('im/twitter.png') no-repeat top left;
+ 	background:url('<?php bloginfo('template_url'); ?>/im/twitter.png') no-repeat top left;
 }
 
 ul#inner-footer li.inner-footer_icon.googleplus a {
- 	background:url('im/googleplus.png') no-repeat top left;
+ 	background:url('<?php bloginfo('template_url'); ?>/im/googleplus.png') no-repeat top left;
 }
 
 ul#inner-footer li.inner-footer_icon.pinterest a {
- 	background:url('im/pinterest.png') no-repeat top left;
+ 	background:url('<?php bloginfo('template_url'); ?>/im/pinterest.png') no-repeat top left;
 }
 
 ul#inner-footer li.inner-footer_icon.linkedin a {
- 	background:url('im/linkedin.png') no-repeat top left;
+ 	background:url('<?php bloginfo('template_url'); ?>/im/linkedin.png') no-repeat top left;
 }
 
 ul#inner-footer li.inner-footer_icon a:hover {
@@ -732,3 +815,76 @@ ul#inner-footer li a {
 	padding:0;
 	line-height:1.4em;
 }
+
+/* CREDIT FOOTER */
+
+ul#footer {
+	position:fixed;
+	bottom:0px;
+	right:30px;
+	overflow:hidden;
+	font-size:1.1em;
+	background:#000;
+	padding:2px 10px;
+}
+
+ul#footer li {
+	float:left; 
+	color:#aaa;
+	height:17px;
+	line-height:1.8em;
+}
+
+ul#footer li a {
+	color:#aaa;
+	text-decoration:underline;
+}
+
+ul#footer li a.logo {
+	background:url('<?php bloginfo('template_url'); ?>/im/mini-logo.png') no-repeat top center;
+	display:inline-block;
+	height:17px;
+	width:84px;
+	text-indent:-9999px;
+	position:relative;
+	top:-2px;
+}
+
+
+/* SUPERSIZED PLUGIN */
+		
+#supersized-loader { position:absolute; top:50%; left:50%; z-index:10; width:60px; height:60px; margin:-30px 0 0 -30px; text-indent:-999em; background-color:#111; -webkit-border-radius:5px; -moz-border-radius:5px; border-radius:5px;}
+
+#supersized { position:fixed; left:0; top:0; overflow:hidden; z-index:-999; height:100%; width:100%; }
+#supersized img{ height:auto; width:auto; position:relative; outline:none; border:none; -ms-interpolation-mode:bicubic; image-rendering: optimizeQuality; }
+
+
+/* JQMODAL 
+   jqModal base Styling courtesy of;
+   Brice Burgess <bhb@iceburg.net> */
+	
+.jqmWindow {
+    display: none;
+    
+    position: absolute;
+    top: 17%;
+    left: 50%;
+    
+    margin-left: -240px;
+    width: 400px;
+    
+    padding: 40px;
+}
+
+.jqmOverlay { background-color: #000; }
+
+* iframe.jqm {position:absolute;top:0;left:0;z-index:-1;
+	width: expression(this.parentNode.offsetWidth+'px');
+	height: expression(this.parentNode.offsetHeight+'px');
+}
+
+* html .jqmWindow {
+     position: absolute;
+     top: expression((document.documentElement.scrollTop || document.body.scrollTop) + Math.round(17 * (document.documentElement.offsetHeight || document.body.clientHeight) / 100) + 'px');
+}
+</style>

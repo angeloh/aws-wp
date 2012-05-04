@@ -41,6 +41,7 @@
 					<h1 class="<?php if(leimg('bkt_logo', 'bkt_logodisable', 'launchmodule_options')) { echo 'haslogo'; } else { echo 'nologo'; } ?> <?php if(ler('heading_disable') == false) { echo 'hastextheading'; } else { echo 'notextheading'; }?>">
 						<?php if(leimg('bkt_logo','bkt_logodisable', 'launchmodule_options')) { echo '<span></span>'; } le('heading_content'); ?>
 					</h1>
+					<img src="<?php echo leimg('bkt_logo', 'bkt_logodisable', 'launchmodule_options'); ?>" id="logoHeight"/>
 				</header>
 				
 				

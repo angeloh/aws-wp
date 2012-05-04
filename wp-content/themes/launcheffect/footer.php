@@ -39,6 +39,10 @@
 	
 	<?php } ?>
 	
+	<!-- START ADDITIONAL USER-DEFINED CODE -->
+	<?php echo ler('lefx_addjsfooter'); ?>
+	<!-- END ADDITIONAL USER-DEFINED CODE -->
+	
 <?php wp_footer(); ?> 	
 </body>
 </html>

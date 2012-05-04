@@ -15,7 +15,7 @@ function pages_optionspanel_name() {
 }
 
 function pages_optionspanel_array() {
-
+	
 	$array = array(
 	
 	'Learn More Tab' =>
@@ -908,12 +908,8 @@ function build_le_pages_page() {
 	
 	<?php	
 		lefx_form(pages_optionspanel_name(), pages_optionspanel_array()); 
-	
 	?>
 </div>
-
-<div id="youtube-info" class="jqmWindow"><img src="<?php echo get_bloginfo('template_url'); ?>/functions/im/youtube-info.jpg" /></div>
-<div id="vimeo-info" class="jqmWindow"><img src="<?php echo get_bloginfo('template_url'); ?>/functions/im/vimeo-info.jpg" /></div>
 
 <?php
 

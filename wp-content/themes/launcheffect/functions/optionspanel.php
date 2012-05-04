@@ -207,7 +207,7 @@ $firstfield = true;
 // Custom Fields
 $premium = null;
 $aweber_custom_fields = array();
-$chimp_custom_field = array();
+$chimp_custom_fields = array();
 $cm_custom_fields = array();
 $custom_field_names = array();
 $mc_firstname = '';
@@ -1092,7 +1092,7 @@ if(lefx_version() == 'premium')
 							$data[$field['tag']] = $stat->{$fieldname};
 						}
 						*/
-						
+						if(count($chimp_custom_fields))
 						foreach($chimp_custom_fields as  $k=> $field)
 						{
 							$pos = array_search($field['tag'], $mc_tags);
@@ -1210,11 +1210,7 @@ if(lefx_version() == 'premium')
 			    }
 				
 				/* ********************** */
-				$existing_field_names = array();
-				foreach($custom_fields as $field)
-				{
-					array_push($existing_field_names, $field->name);
-				}
+				
 				foreach($aweber_custom_fields as $field)
 				{
 					// Aweber will not allow additional name fields
